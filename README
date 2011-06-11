@@ -18,3 +18,5 @@ Preferences (Windows->Preferences->JetPack) to store the location of Mozillalabs
 Popup menu (project right click) to Add/Remove JetPack project nature
 Nature popup menu for base SDK actions (open JetPack terminal, run, create XPI, view documentation, test)
 
+You can also look at Bogomil Shopov's JetPack.ruble to add custom menu commands
+(https://github.com/bogomil/JetPack.ruble)

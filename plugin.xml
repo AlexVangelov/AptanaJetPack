@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="jetpack.preferences.JetPackPreferencePage"
+            id="jetpack.preferences.JetPackPreferencePage"
+            name="JetPack Config">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="jetpack.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="jetpack.category"
+            name="Mozilla JetPack">
+      </category>
+      <wizard
+            category="jetpack.category"
+            class="jetpack.JetPackWizard"
+            icon="icons/jetpack.png"
+            id="jetpack.wizard"
+            name="JetPack project"
+            project="true">
+      </wizard>
+   </extension>
+   <extension
+         id="jetpackNature"
+         name="JetPack Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="jetpack.builder.JetPackNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="icons/jet2.png"
+            id="jetpack.image"
+            natureId="jetpack.jetpackNature">
+      </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="jetpack.natureswitch"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IProject">
+         <action
+               class="jetpack.builder.ToggleNatureAction"
+               enablesFor="+"
+               id="jetpack.addRemoveNatureAction"
+               label="Add/Remove JetPack Nature"
+               menubarPath="additions">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="jetpack.objectContributionJetPack"
+            objectClass="org.eclipse.core.resources.IProject">
+         <menu
+               id="jetpack.navigator.subMenu"
+               label="JetPack">
+            <separator
+                  name="terminal">
+            </separator>
+            <separator
+                  name="actions">
+            </separator>
+            <separator
+                  name="other">
+            </separator>
+         </menu>
+         <action
+               class="jetpack.JetTerminal"
+               id="jetpack.actionTerminal"
+               label="JetPack Terminal"
+               menubarPath="jetpack.navigator.subMenu/terminal">
+         </action>
+         <action
+               class="jetpack.JetRun"
+               id="jetpack.actionRun"
+               label="Run JetPack"
+               menubarPath="jetpack.navigator.subMenu/actions">
+         </action>
+         <action
+               class="jetpack.JetBuildXPI"
+               id="jetpack.actionBuild"
+               label="Generate XPI package"
+               menubarPath="jetpack.navigator.subMenu/actions">
+         </action>
+         <action
+               class="jetpack.JetTests"
+               id="jetpack.actionTest"
+               label="Test JetPack"
+               menubarPath="jetpack.navigator.subMenu/other">
+         </action>
+         <action
+               class="jetpack.JetDocs"
+               id="jetpack.actionDocs"
+               label="View documentation"
+               menubarPath="jetpack.navigator.subMenu/other">
+         </action>
+         <filter
+               name="projectNature"
+               value="jetpack.jetpackNature">
+         </filter>
+      </objectContribution>
+   </extension>
+
+</plugin>

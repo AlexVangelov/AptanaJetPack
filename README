@@ -1,0 +1,20 @@
+Aptana plugin for Mozilla JetPack development
+
+Author: Alex Vangelov
+License: Respect the work of the creator and have fun! 2011
+
+Jetpack is a tool for building Firefox 4 add-ons using common web technologies
+(http://jetpack.mozillalabs.com)
+
+Instalation:
+Help->Install New Software
+Add new software site
+Name: AptanaJetPack
+Location: https://aptanajetpack.svn.sourceforge.net/svnroot/aptanajetpack/JetPackSite/
+
+Provides:
+JetPack Project Wizard that creates new project with default skeleton
+Preferences (Windows->Preferences->JetPack) to store the location of Mozillalabs Add-on SDK
+Popup menu (project right click) to Add/Remove JetPack project nature
+Nature popup menu for base SDK actions (open JetPack terminal, run, create XPI, view documentation, test)
+

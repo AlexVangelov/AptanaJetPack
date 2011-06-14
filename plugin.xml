@@ -24,6 +24,7 @@
       <wizard
             category="jetpack.category"
             class="jetpack.JetPackWizard"
+            finalPerspective="jetpack.perspective"
             icon="icons/jetpack.png"
             id="jetpack.wizard"
             name="JetPack project"
@@ -115,6 +116,112 @@
                value="jetpack.jetpackNature">
          </filter>
       </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.ui.navigator.CommonNavigator"
+            icon="icons/jetpack_navi.png"
+            id="jetpack.navigator"
+            name="JetPack Navigator">
+      </view>
+      <view
+            class="com.aptana.terminal.views.TerminalView"
+            icon="icons/jetpack_term16.png"
+            id="jetpack.terminal"
+            name="JetPack Terminal"
+            restorable="false">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerActionBinding
+            viewerId="jetpack.navigator">
+         <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+      <viewerContentBinding
+            viewerId="jetpack.navigator">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resourceContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.filters.*">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.linkHelper">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.workingSets">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="jetpack.perspectives.PerspectiveFactory"
+            id="jetpack.perspective"
+            name="JetPack Perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="jetpack.perspective">
+         <view
+               id="jetpack.navigator"
+               minimized="false"
+               ratio="0.25"
+               relationship="left"
+               relative="org.eclipse.ui.editorss">
+         </view>
+         <view
+               id="jetpack.terminal"
+               minimized="false"
+               ratio="0.25"
+               relationship="bottom"
+               relative="org.eclipse.ui.editorss">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="jetpack.viewContribution"
+            targetID="jetpack.navigator">
+         <action
+               class="jetpack.actions.ViewActionRunDelegate"
+               icon="icons/jetpack_run16.png"
+               id="jetpack.actionNavRun"
+               label="Run JetPack"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="jpgroup">
+         </action>
+         <action
+               class="jetpack.actions.ViewActionTermDelegate"
+               icon="icons/jetpack_term16.png"
+               id="jetpack.actionNavTerm"
+               label="JetPack Terminal"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="jpgroup">
+         </action>
+         <action
+               class="jetpack.actions.ViewActionXpiDelegate"
+               icon="icons/jetpack_xpi16.png"
+               id="jetpack.actionNavXPI"
+               label="Create XPI package"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="jpgoup">
+         </action>
+      </viewContribution>
    </extension>
 
 </plugin>

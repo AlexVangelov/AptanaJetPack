@@ -8,9 +8,13 @@ package jetpack;
 import jetpack.preferences.PreferenceConstants;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -78,15 +82,31 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 	
+	public static void OpenTerminal(IProject project) {
+		IPreferenceStore pref = Activator.getDefault().getPreferenceStore();
+		IPath sdk_path = new Path(pref.getString(PreferenceConstants.P_PATH));
+		jetpackTerminal = TerminalView.openView(project.getName(), project.getName(), sdk_path);
+		jetpackTerminal.sendInput(String.format("cd %s && source bin/activate && cd \"%s\"\n", sdk_path, project.getLocation()));
+	}
+	
 	public static void TerminalExecute(IProject project,String cmd) {
-		if (jetpackTerminal == null) {
-			IPreferenceStore pref = Activator.getDefault().getPreferenceStore();
-			IPath sdk_path = new Path(pref.getString(PreferenceConstants.P_PATH));
-			jetpackTerminal = TerminalView.openView(project.getName(), project.getName(), sdk_path);
-			jetpackTerminal.sendInput(String.format("cd %s && source bin/activate && cd \"%s\"\n", sdk_path, project.getLocation()));
-		}
+		if (jetpackTerminal == null) OpenTerminal(project);
 		jetpackTerminal.setFocus();
 		jetpackTerminal.sendInput(cmd);
 	}
+	
+	public static IResource extractSelection(ISelection sel) {
+	      if (!(sel instanceof IStructuredSelection))
+	         return null;
+	      IStructuredSelection ss = (IStructuredSelection) sel;
+	      Object element = ss.getFirstElement();
+	      if (element instanceof IResource)
+	         return (IResource) element;
+	      if (!(element instanceof IAdaptable))
+	         return null;
+	      IAdaptable adaptable = (IAdaptable)element;
+	      Object adapter = adaptable.getAdapter(IResource.class);
+	      return (IResource) adapter;
+	   }
 
 }

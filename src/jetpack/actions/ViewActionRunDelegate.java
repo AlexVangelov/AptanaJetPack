@@ -1,20 +1,16 @@
-package jetpack;
+package jetpack.actions;
 
+import jetpack.Activator;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IViewActionDelegate;
+import org.eclipse.ui.IViewPart;
 
-public class JetRun implements IObjectActionDelegate {
-	
+public class ViewActionRunDelegate implements IViewActionDelegate {
+
 	private ISelection selection;
-
-	public JetRun() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void run(IAction action) {
 		IResource r = Activator.extractSelection(selection);
@@ -27,8 +23,9 @@ public class JetRun implements IObjectActionDelegate {
 	}
 
 	@Override
-	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-		
+	public void init(IViewPart view) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
